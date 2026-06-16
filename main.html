@@ -1,22 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <script src="script.js " defer></script>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
-    <title>Better Instagram</title>
-  </head>
-  <body>
-    <h1 style="text-align: center">Arrange Images by drag and drop</h1>
-    <div class="flex" id="parent">
-      <div draggable="true" class="image" >Image 1</div>
-      <div draggable="true" class="image" >Image 2</div>
-      <div draggable="true" class="image" >Image 3</div>
-      <div draggable="true" class="image" >Image 4</div>
-      <div draggable="true" class="image" >Image 5</div>
-      <div draggable="true" class="image" >Image 6</div>
-    </div>
-  </body>
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Better Instagram</title>
+
+
+<style>
+
+body{
+    font-family:Arial, sans-serif;
+}
+
+
+h1{
+    text-align:center;
+}
+
+
+
+.flex{
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:wrap;
+
+}
+
+
+
+.image{
+
+    margin:20px;
+    cursor:grab;
+
+}
+
+
+
+.image div{
+
+    height:300px;
+    width:200px;
+
+    background-size:cover;
+    background-position:center;
+
+}
+
+
+
+#div1{
+
+background-image:url("https://picsum.photos/id/237/200/300");
+
+}
+
+
+#div2{
+
+background-image:url("https://picsum.photos/seed/picsum/200/300");
+
+}
+
+
+
+#div3{
+
+background-image:url("https://picsum.photos/200/300?grayscale");
+
+}
+
+
+
+#div4{
+
+background-image:url("https://picsum.photos/200/300/");
+
+}
+
+
+
+#div5{
+
+background-image:url("https://picsum.photos/200/300.jpg");
+
+}
+
+
+
+#div6{
+
+background-image:url("https://picsum.photos/id/102/200/300");
+
+}
+
+
+
+.selected{
+
+    border:5px solid rgb(0,195,255);
+
+}
+
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<h1>
+Arrange Images by Drag and Drop
+</h1>
+
+
+
+<div class="flex" id="parent">
+
+
+<div draggable="true" id="drag1" class="image">
+<div id="div1"></div>
+</div>
+
+
+
+<div draggable="true" id="drag2" class="image">
+<div id="div2"></div>
+</div>
+
+
+
+
+<div draggable="true" id="drag3" class="image">
+<div id="div3"></div>
+</div>
+
+
+
+
+<div draggable="true" id="drag4" class="image">
+<div id="div4"></div>
+</div>
+
+
+
+
+<div draggable="true" id="drag5" class="image">
+<div id="div5"></div>
+</div>
+
+
+
+
+<div draggable="true" id="drag6" class="image">
+<div id="div6"></div>
+</div>
+
+
+
+</div>
+
+
+
+
+
+<script>
+
+
+let dragged = null;
+
+
+let images = document.querySelectorAll(".image");
+
+
+
+for(let image of images){
+
+
+
+    image.addEventListener("dragstart",(e)=>{
+
+
+        dragged = e.target;
+
+        e.target.classList.add("selected");
+
+
+    });
+
+
+
+    image.addEventListener("dragend",(e)=>{
+
+
+        e.target.classList.remove("selected");
+
+
+    });
+
+
+
+
+    image.addEventListener("dragover",(e)=>{
+
+        e.preventDefault();
+
+    });
+
+
+
+
+    image.addEventListener("drop",(e)=>{
+
+
+        e.preventDefault();
+
+
+
+        let target = e.currentTarget;
+
+
+
+        if(target === dragged)
+            return;
+
+
+
+
+        let parent = target.parentNode;
+
+
+
+        let next = target.nextSibling;
+
+
+
+        parent.insertBefore(dragged,target);
+
+
+
+        if(next){
+
+            parent.insertBefore(target,next);
+
+        }
+        else{
+
+            parent.appendChild(target);
+
+        }
+
+
+    });
+
+
+
+}
+
+
+
+</script>
+
+
+
+</body>
+
 </html>
