@@ -11,26 +11,12 @@
 
 <style>
 
-body{
-    font-family:Arial, sans-serif;
-}
-
-
-h1{
-    text-align:center;
-}
-
-
-
 .flex{
-
     display:flex;
     justify-content:center;
     align-items:center;
     flex-wrap:wrap;
-
 }
-
 
 
 .image{
@@ -41,64 +27,13 @@ h1{
 }
 
 
+img{
 
-.image div{
-
-    height:300px;
     width:200px;
-
-    background-size:cover;
-    background-position:center;
-
-}
-
-
-
-#div1{
-
-background-image:url("https://picsum.photos/id/237/200/300");
+    height:300px;
+    object-fit:cover;
 
 }
-
-
-#div2{
-
-background-image:url("https://picsum.photos/seed/picsum/200/300");
-
-}
-
-
-
-#div3{
-
-background-image:url("https://picsum.photos/200/300?grayscale");
-
-}
-
-
-
-#div4{
-
-background-image:url("https://picsum.photos/200/300/");
-
-}
-
-
-
-#div5{
-
-background-image:url("https://picsum.photos/200/300.jpg");
-
-}
-
-
-
-#div6{
-
-background-image:url("https://picsum.photos/id/102/200/300");
-
-}
-
 
 
 .selected{
@@ -106,7 +41,6 @@ background-image:url("https://picsum.photos/id/102/200/300");
     border:5px solid rgb(0,195,255);
 
 }
-
 
 
 </style>
@@ -118,7 +52,7 @@ background-image:url("https://picsum.photos/id/102/200/300");
 <body>
 
 
-<h1>
+<h1 style="text-align:center">
 Arrange Images by Drag and Drop
 </h1>
 
@@ -128,41 +62,64 @@ Arrange Images by Drag and Drop
 
 
 <div draggable="true" id="drag1" class="image">
-<div id="div1"></div>
+
+<img id="div1"
+src="https://picsum.photos/id/237/200/300">
+
 </div>
+
 
 
 
 <div draggable="true" id="drag2" class="image">
-<div id="div2"></div>
+
+<img id="div2"
+src="https://picsum.photos/seed/picsum/200/300">
+
 </div>
+
 
 
 
 
 <div draggable="true" id="drag3" class="image">
-<div id="div3"></div>
+
+<img id="div3"
+src="https://picsum.photos/200/300?grayscale">
+
 </div>
+
 
 
 
 
 <div draggable="true" id="drag4" class="image">
-<div id="div4"></div>
+
+<img id="div4"
+src="https://picsum.photos/200/300/">
+
 </div>
+
 
 
 
 
 <div draggable="true" id="drag5" class="image">
-<div id="div5"></div>
+
+<img id="div5"
+src="https://picsum.photos/200/300.jpg">
+
 </div>
 
 
 
 
+
 <div draggable="true" id="drag6" class="image">
-<div id="div6"></div>
+
+<img id="div6"
+src="https://picsum.photos/id/102/200/300">
+
 </div>
 
 
@@ -186,23 +143,22 @@ let images = document.querySelectorAll(".image");
 for(let image of images){
 
 
-
     image.addEventListener("dragstart",(e)=>{
 
 
-        dragged = e.target;
+        dragged = e.currentTarget;
 
-        e.target.classList.add("selected");
+        dragged.classList.add("selected");
 
 
     });
 
 
 
-    image.addEventListener("dragend",(e)=>{
+    image.addEventListener("dragend",()=>{
 
 
-        e.target.classList.remove("selected");
+        dragged.classList.remove("selected");
 
 
     });
@@ -212,9 +168,12 @@ for(let image of images){
 
     image.addEventListener("dragover",(e)=>{
 
+
         e.preventDefault();
 
+
     });
+
 
 
 
@@ -223,7 +182,6 @@ for(let image of images){
 
 
         e.preventDefault();
-
 
 
         let target = e.currentTarget;
@@ -235,29 +193,15 @@ for(let image of images){
 
 
 
-
         let parent = target.parentNode;
 
 
 
-        let next = target.nextSibling;
+        parent.insertBefore(
+            dragged,
+            target
+        );
 
-
-
-        parent.insertBefore(dragged,target);
-
-
-
-        if(next){
-
-            parent.insertBefore(target,next);
-
-        }
-        else{
-
-            parent.appendChild(target);
-
-        }
 
 
     });
